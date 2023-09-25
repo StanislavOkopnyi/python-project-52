@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div>
+  <h2>Delete User</h2>
+  <form action="{{ request.path }}" method="post">
+    {% csrf_token %}
+    <button type="confirm">Delete User</button>
+  </form>
+</div>
+{% endblock content %}

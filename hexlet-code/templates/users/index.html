@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+
+{% block content %}
+<h2 class="text-center py-2">{% trans 'Users' %}</h2>
+  <div class="container wrapper flex-grow-1">
+  <table class="table">
+    <thead>
+    <th>{% trans 'ID' %}</th>
+    <th>{% trans 'Username' %}</th>
+    <th>{% trans 'Fullname' %}</th>
+    <th>{% trans 'Date joined' %}</th>
+    <th></th>
+    </thead>
+
+  <tbody>
+    {% for user in users %}
+    <tr>
+      <td>{{user.id}}</td>
+      <td>{{user.username}}</td>
+      <td>{{user.get_full_name}}</td>
+      <td>{{user.date_joined}}</td>
+      <td>
+          <a href="{% url 'users:update' pk=user.id %}">{% trans 'Update' %}</a>
+        <br>
+        <a href="{% url 'users:delete' pk=user.id %}">{% trans 'Delete' %}</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+
+  </table>
+  </div>
+{% endblock content %}

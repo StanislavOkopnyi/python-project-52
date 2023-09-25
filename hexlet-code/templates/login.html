@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<div class="container wrapper flex-grow-1">
+    <h1 class="py-4">{% trans 'Login' %}</h1>
+    {% if form.errors %}
+    <div class="alert alert-danger" role="alert">
+        <p>Your username and password didn't match. Please try again.</p>
+    </div>
+    {% endif %}
+    {% if user.is_authenticated %}
+    <div class="alert alert-danger" role="alert">
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    </div>
+    {% endif %}
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+{% for field in form %}
+        <div class="mb-3">
+          {{field.label_tag}}
+          {{field}}
+        </div>
+      {% endfor %}
+<input type="submit" value="{% trans 'Login' %}">
+</form>
+</div>
+{# Assumes you set up the password_reset view in your URLconf #}
+{# <p><a href="{% url 'password_reset' %}">Lost password?</a></p> #}
+
+{% endblock %}
