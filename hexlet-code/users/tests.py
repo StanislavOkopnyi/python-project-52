@@ -1,4 +1,4 @@
-from django.test import TransactionTestCase
+from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 
@@ -6,7 +6,7 @@ from django.urls import reverse
 User = get_user_model()
 
 
-class UserCreateTestCase(TransactionTestCase):
+class UserCreateTestCase(TestCase):
     def test_registration(self):
         response = self.client.post(
             reverse("users:create"),
@@ -21,7 +21,7 @@ class UserCreateTestCase(TransactionTestCase):
         assert User.objects.get(username="some_name")
 
 
-class UserDeleteTestCase(TransactionTestCase):
+class UserDeleteTestCase(TestCase):
     def setUp(self):
         User.objects.create_user(
             username="foo",
@@ -34,7 +34,7 @@ class UserDeleteTestCase(TransactionTestCase):
         self.assertEqual(response.status_code, 302)
 
 
-class UserUpdateTestCase(TransactionTestCase):
+class UserUpdateTestCase(TestCase):
     def setUp(self):
         User.objects.create_user(
             username="foo",

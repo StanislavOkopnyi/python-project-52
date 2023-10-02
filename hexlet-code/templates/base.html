@@ -18,7 +18,7 @@
   </head>
 
 
-  <body>
+  <body class="d-flex flex-column min-vh-100">
 
   <header class="bg-light">
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -30,6 +30,9 @@
           <a class="nav-link" aria-current="page" href="{% url 'users:list' %}">{% trans 'Users List'%}</a>
         </li>
         {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'statuses:list' %}">{% trans 'Statuses' %}</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'logout' %}">{% trans 'Logout' %}</a>
         </li>
@@ -47,10 +50,18 @@
 </nav>
   </header>
 
-  {% block content %}
-  {% endblock content %}
+  {% if messages %}
+     {% for message in messages %}
+         <div class="text-center alert alert-{{ message.tags }}">
+             {{ message|safe }}
+         </div>
+     {% endfor %}
+ {% endif %}
+{% block content %}
 
-  <footer class="position-absolute bottom-0 start-50 translate-middle-x">
+{% endblock content %}
+
+  <footer class="bd-footer py-4 py-md-5 mt-5">
     <div class="inner">
       <p class="text-center">GitHub <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.YyOMn9wj8tZCEyCPTYGlegHaHa%26pid%3DApi&f=1&ipt=f32f908aca62e954fee1552a8130c8bd066526852a4288f3bf749d08c77a4988&ipo=images" width=20px height=20px alt="GitHub">: <a href="https://github.com/StanislavOkopnyi">Stanislav Okopnyi</a></p>
     </div>

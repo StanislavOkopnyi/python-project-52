@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="container wrapper flex-grow-1">
-  <h1 class="py-4">{% trans 'Update User' %}</h1>
-  <form action="{{ request.path }}" method="post">
+  <h1 class="py-4">{% trans 'Create Status' %}</h2>
+  <form action="{% url 'statuses:create' %}" method="post">
     {% csrf_token %}
     <div>
       {% for field in form %}
@@ -16,7 +16,7 @@
         </div>
       {% endfor %}
     </div>
-    <button type="submit" class="btn btn-primary">{% trans 'Submit' %}</button>
+  <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>
 {% endblock content %}
