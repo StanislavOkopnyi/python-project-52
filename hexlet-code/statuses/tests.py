@@ -3,6 +3,18 @@ from django.urls import reverse
 from .models import Status
 
 
+class StatusListView(TestCase):
+    def setUp(self):
+        Status.objects.create(name="foo")
+        Status.objects.create(name="bar")
+        Status.objects.create(name="xyz")
+
+    def test_list(self):
+        response = self.client.get(reverse("statuses:list"))
+        self.assertEqual(response.status_code, 200)
+
+
+
 class StatusCreateTestCase(TestCase):
     def test_create(self):
         response = self.client.post(
@@ -12,7 +24,7 @@ class StatusCreateTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
 
 
-class UserDeleteTestCase(TestCase):
+class StatusDeleteTestCase(TestCase):
     def setUp(self):
         Status.objects.create(name="foo")
 
@@ -31,5 +43,3 @@ class StatusesUpdateTestCase(TestCase):
         response = self.client.post(reverse("statuses:update", args=[1]),
                                     {"name": "bar"})
         self.assertEqual(response.status_code, 302)
-
-# Create your tests here.

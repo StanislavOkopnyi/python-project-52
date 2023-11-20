@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="container wrapper flex-grow-1">
-  <h1 class="py-4">{% trans 'Create Status' %}</h1>
-  <form action="{% url 'statuses:create' %}" method="post">
+  <h1 class="py-4">{% trans 'Create Task' %}</h2>
+  <form action="{% url 'tasks:create' %}" method="post">
     {% csrf_token %}
     <div>
       {% for field in form %}

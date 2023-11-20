@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+
+{% block content %}
+<h2 class="text-center py-2">{% trans 'Labels' %}</h2>
+  <div class="container wrapper flex-grow-1">
+    <a href="{% url 'labels:create' %}">{% trans 'Create Label'%}</a>
+  <table class="table">
+    <thead>
+    <th>{% trans 'ID' %}</th>
+    <th>{% trans 'Name' %}</th>
+    <th>{% trans 'Created at' %}</th>
+    <th></th>
+    </thead>
+
+  <tbody>
+    {% for label in labels %}
+    <tr>
+      <td>{{label.id}}</td>
+      <td>{{label.name}}</td>
+      <td>{{label.created_at}}</td>
+      <td>
+          <a href="{% url 'labels:update' pk=label.id %}">{% trans 'Update' %}</a>
+        <br>
+        <a href="{% url 'labels:delete' pk=label.id %}">{% trans 'Delete' %}</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+
+  </table>
+  </div>
+{% endblock content %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+
+{% block content %}
+<div>
+  <h2>{% trans 'Delete Task' %}</h2>
+  <form action="{{ request.path }}" method="post">
+    {% csrf_token %}
+    <button type="confirm">{% trans 'Delete Task' %}</button>
+  </form>
+</div>
+{% endblock content %}
