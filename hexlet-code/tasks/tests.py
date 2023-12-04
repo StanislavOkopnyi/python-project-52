@@ -102,4 +102,38 @@ class TaskesUpdateTestCase(TestCase):
                                     {"name": "bar"})
         self.assertEqual(response.status_code, 302)
 
-# Create your tests here.
+
+class FilterTestCase(TestCase):
+    def setUp(self):
+        self.user1 = User.objects.create_user(
+            username="test",
+            password="string123",
+        )
+        self.user2 = User.objects.create_user(
+            username="foobar",
+            password="string123",
+        )
+        status1 = Status.objects.create(name="test")
+        status2 = Status.objects.create(name="foobar")
+        Task.objects.create(
+            name="foo",
+            author=self.user1,
+            performer=self.user1,
+            status=status1,
+            text="test",
+        )
+        Task.objects.create(
+            name="foo",
+            author=self.user2,
+            performer=self.user2,
+            status=status2,
+            text="test",
+        )
+
+    def test_filter(self):
+        response = self.client.get(
+            reverse("tasks:list"),
+            {"performer": self.user1.id,}
+        )
+        self.assertEqual(response.status_code, 200)
+

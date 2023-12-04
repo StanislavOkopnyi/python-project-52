@@ -3,9 +3,17 @@
 
 
 {% block content %}
-<h2 class="text-center py-2">{% trans 'Tasks' %}</h2>
   <div class="container wrapper flex-grow-1">
-  <a href="{% url 'tasks:create' %}">{% trans 'Create task'%}</a>
+  <h2 class="py-2 my-4">{% trans 'Tasks' %}</h2>
+  <a class="btn btn-primary mb-3" href="{% url 'tasks:create' %}">{% trans 'Create task'%}</a>
+  <div class="card mb-3">
+  <div class="card-body bg-light">
+  <form class="form-inline center" method="get">
+        {{ filter.form.as_p }}
+  <input class="btn btn-primary" type="submit" value="{% trans 'Show' %}" />
+  </form>
+  </div>
+  </div>
   <table class="table">
     <thead>
     <th>{% trans 'ID' %}</th>
@@ -17,6 +25,22 @@
     </thead>
 
   <tbody>
+    {% if filter.qs != None %}
+    {% for task in filter.qs %}
+    <tr>
+      <td><a href="{% url 'tasks:task' pk=task.id %}">{{task.id}}</td>
+      <td>{{task.name}}</td>
+      <td>{{task.status}}</td>
+      <td>{{task.performer}}</td>
+      <td>{{task.created_at}}</td>
+      <td>
+          <a href="{% url 'tasks:update' pk=task.id %}">{% trans 'Update' %}</a>
+        <br>
+        <a href="{% url 'tasks:delete' pk=task.id %}">{% trans 'Delete' %}</a>
+      </td>
+    </tr>
+    {% endfor %}
+    {% else %}
     {% for task in tasks %}
     <tr>
       <td><a href="{% url 'tasks:task' pk=task.id %}">{{task.id}}</td>
@@ -31,6 +55,7 @@
       </td>
     </tr>
     {% endfor %}
+    {% endif %}
   </tbody>
 
   </table>

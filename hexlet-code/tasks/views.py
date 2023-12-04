@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.translation import gettext as _
 
+from .filters import TaskFilter
 from .forms import TaskCreateForm, TaskUpdateForm
 from .models import Task
 
@@ -13,6 +14,12 @@ class TaskListView(ListView):
     model = Task
     context_object_name = "tasks"
     template_name = "tasks/index.html"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        data = super().get_context_data(object_list=object_list, **kwargs)
+        filter = TaskFilter(self.request.GET, queryset=Task.objects.all())
+        data["filter"] = filter
+        return data
 
 
 class TaskDetailView(LoginRequiredMixin, DetailView):

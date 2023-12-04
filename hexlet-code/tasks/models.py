@@ -10,13 +10,13 @@ User = get_user_model()
 
 class Task(models.Model):
 
-    author = models.ForeignKey(User, on_delete=models.RESTRICT, related_name="created_tasks")
-    status = models.ForeignKey(Status, on_delete=models.RESTRICT)
-    performer = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name="todo_tasks")
-    labels = models.ManyToManyField(Label)
-    name = models.CharField(max_length=255)
-    text = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User, on_delete=models.RESTRICT, related_name="created_tasks", verbose_name=_("author"))
+    status = models.ForeignKey(Status, on_delete=models.RESTRICT, verbose_name=_("status"))
+    performer = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name="todo_tasks", verbose_name=_("performer"))
+    labels = models.ManyToManyField(Label, verbose_name=_("labels"))
+    name = models.CharField(max_length=255, verbose_name=_("name"))
+    text = models.TextField(verbose_name=_("text"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created_at"))
 
     def __str__(self):
         return f"{self.name}"

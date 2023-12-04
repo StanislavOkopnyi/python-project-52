@@ -1,13 +1,9 @@
 from django.forms import ModelForm, ModelMultipleChoiceField
 
-from labels.models import Label
 from .models import Task
 
 
 class TaskCreateForm(ModelForm):
-
-    label = ModelMultipleChoiceField(queryset=Label.objects.all())
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for visible in self.visible_fields():
